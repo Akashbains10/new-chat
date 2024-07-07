@@ -1,39 +1,28 @@
 'use client'
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MoreIcon from "@mui/icons-material/MoreVert";
-// import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import kylie from '@/assets/kylie-jenner.jpg'
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
 import { motion } from "framer-motion";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddIcCallIcon from '@mui/icons-material/AddIcCall';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import Image from 'next/image';
 
-export default function TopBar({
-  toggled,
-  broken,
-  setToggled,
-}: {
-  toggled?: boolean;
-  broken?: boolean;
-  setToggled?: (i: boolean) => void;
-}) {
-  const { data: session, status } = useSession();
-
+export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const navigate = useNavigate();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const router = useRouter();
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -48,103 +37,87 @@ export default function TopBar({
     handleMobileMenuClose();
   };
 
-  const logout = () => {
-    handleMenuClose();
-    signOut();
-  }
-
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const openProfile = (event: React.MouseEvent<HTMLElement>) => {
-    // handleMobileMenuOpen(event);
-    router.push("/admin/profile");
-  }
-  const menuId = "primary-search-account-menu";
+  const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={openProfile}>Profile</MenuItem>
-      <MenuItem onClick={logout}>Logout</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem onClick={openProfile}>Profile</MenuItem>
-      <MenuItem onClick={logout}>Logout</MenuItem>
-    </Menu>
-  );
+  const mobileMenuId = 'primary-search-account-menu-mobile';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}>
-
       <Box sx={{ flexGrow: 1 }}>
         <AppBar color="default" position="static">
           <Toolbar>
-            {broken && (
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                sx={{ mr: 2 }}
-                // onClick={() => setToggled(!toggled)}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-            <Box sx={{ flexGrow: 1 }} />
-            <Box
-              sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
             >
+              <Image src={kylie} alt='profile' height={40} className='rounded-full' />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block', fontSize: '16px' } }}
+            >
+              Kylie Jenner
+              <p className='text-slate-500 font-normal text-sm'>Last seen today 01:00 P.M</p>
+            </Typography>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex', gap: '8px' } }}>
+              <IconButton size="medium" aria-label="show 4 new mails" color="inherit" sx={{ backgroundColor: '#D3D3D3' }}>
+                <SearchIcon className='text-slate-500' />
+              </IconButton>
               <IconButton
-                size="large"
+                size="medium"
+                aria-label="show 17 new notifications"
+                color="inherit"
+                sx={{ backgroundColor: '#D3D3D3' }}
+              >
+                <AddIcCallIcon className='text-slate-500' />
+              </IconButton>
+              <IconButton
+                size="medium"
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                className="mx-1"
                 color="inherit"
+                sx={{ backgroundColor: '#D3D3D3' }}
               >
-                <AccountCircle />
+                <MoreVertIcon className='text-slate-500' />
               </IconButton>
-              {status === "authenticated" && <Typography>{session?.user?.name}</Typography>}
-
             </Box>
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
                 aria-label="show more"
@@ -153,15 +126,13 @@ export default function TopBar({
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MoreIcon className='text-slate-500' />
               </IconButton>
             </Box>
           </Toolbar>
         </AppBar>
-        {renderMobileMenu}
         {renderMenu}
       </Box>
     </motion.div>
-
   );
 }
