@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -18,9 +18,10 @@
     "@mui/x-date-pickers": "^7.7.1",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.11",
+    "express": "^4.19.2",
     "framer-motion": "^11.2.12",
     "mongoose": "^8.4.4",
-    "next": "14.2.4",
+    "next": "^14.2.4",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
