@@ -28,6 +28,8 @@
     "react-hook-form": "^7.52.0",
     "react-hot-toast": "^2.4.1",
     "react-phone-number-input": "^3.4.3",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
