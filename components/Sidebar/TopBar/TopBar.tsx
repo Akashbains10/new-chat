@@ -91,7 +91,8 @@ export default function PrimarySearchAppBar() {
               Kylie Jenner
               <p className='text-slate-500 font-normal text-sm'>Last seen today 01:00 P.M</p>
             </Typography>
-            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ flexGrow: 1 }} >
+            </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex', gap: '8px' } }}>
               <IconButton size="medium" aria-label="show 4 new mails" color="inherit" sx={{ backgroundColor: '#D3D3D3' }}>
                 <SearchIcon className='text-slate-500' />

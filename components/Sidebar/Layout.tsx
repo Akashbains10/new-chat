@@ -22,7 +22,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <main className="w-100">
         <TopBar toggled={toggled} setToggled={setToggled} broken={broken} />
         <div style={{ height: "90vh", overflow: "auto" }}>
-            {children}
+          {children}
         </div>
       </main>
     </div>
