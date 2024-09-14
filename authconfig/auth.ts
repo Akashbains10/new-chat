@@ -1,7 +1,7 @@
 import User from "@/models/user.model";
 import db from "@/utils/connectDB";
 import bcrypt from 'bcryptjs';
-import { NextAuthOptions } from "next-auth";
+import { getServerSession, NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 const days = (i: number) => i * 24 * 60 * 60;
@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token, user }) {
             await db.connectDB();
             const findUser = await User.findById(token.userId);
-            session.user = findUser;
+            session = findUser;
             return session;
         }
     },
@@ -49,7 +49,6 @@ export const authOptions: NextAuthOptions = {
                 if (!findUser) {
                     throw new Error('User not found')
                 }
-                console.log({ password: password, dbPassword: findUser.password }, '**************')
                 if (!(await bcrypt.compare(password, findUser.password))) {
                     throw new Error('Invalid credentials')
                 }
@@ -58,3 +57,5 @@ export const authOptions: NextAuthOptions = {
         })
     ]
 };
+
+export const getServerAuthSession = () => getServerSession(authOptions); //(6)

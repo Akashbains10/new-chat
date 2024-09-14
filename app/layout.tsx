@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import "./globals.css";
-import TopBar from "../components/Sidebar/TopBar/TopBar";
 import { ThemeProvider } from "@mui/material";
 import theme from "../theme";
-import { SessionProvider } from "next-auth/react";
 import PageSessionProvider from "../Providers/PageSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,17 +28,8 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <PageSessionProvider>
             <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
-            {/* <TopBar /> */}
             <main className="min-h-screen">
                 {children}
-                <div className="grid grid-cols-12 gap-4">
-                  <div className="col-span-5">
-                    {chatbar}
-                  </div>
-                  <div className="col-span-7">
-                    {main}
-                  </div>
-                </div>
             </main>
           </PageSessionProvider>
         </ThemeProvider>

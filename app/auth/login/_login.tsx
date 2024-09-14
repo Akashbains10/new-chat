@@ -17,8 +17,8 @@ type FormValues = {
 }
 
 const schema = z.object({
-  email: z.string({ required_error: "Email is required" }).min(1),
-  password: z.string({ required_error: "Password is required" }).min(1)
+  email: ((msg: string)=> z.string({ required_error: msg, invalid_type_error: msg }).min(1).email())("Email is required"),
+  password: ((msg: string)=> z.string({ required_error: msg, invalid_type_error: msg }).min(1))("Password is required")
 })
 
 
