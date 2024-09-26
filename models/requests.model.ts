@@ -11,11 +11,12 @@ const requestSchema = new mongoose.Schema({
     },
     status: {
         type: String,
+        default: 'requested',
         enum: ['accepted', 'requested', 'rejected']
     }
 }, {
     timestamps: true
 });
 
-const Requests = mongoose?.models?.Requests || mongoose.model('Request', requestSchema);
+const Requests = mongoose?.models?.Request || mongoose.model('Request', requestSchema);
 export default Requests;
