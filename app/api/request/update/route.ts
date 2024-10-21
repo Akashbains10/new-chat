@@ -20,13 +20,16 @@ export async function POST(request: NextRequest) {
         if (!requests) {
             return NextResponse.json({ message: 'No request found' }, { status: 400 })
         }
+        if (requests.status === 'accepted') {
+            return NextResponse.json({ message: 'Request status cannnot be changed once its accepted' }, { status: 400 })
+        }
+
         requests.status = status;
         await requests.save();
-        if (requests.status === '')  // uncomment for handle case that once user accept the request then it cannot be changed to requested or rejected
-            if (status === 'accepted') {
-                await createFriends(requests.senderId, requests.receiverId);
-                await createFriends(requests.receiverId, requests.senderId);
-            }
+        if (status === 'accepted') {
+            await createFriends(requests.senderId, requests.receiverId);
+            await createFriends(requests.receiverId, requests.senderId);
+        }
         return NextResponse.json({ status: 200, message: `Request ${status} successfuly` })
     } catch (err) {
         console.log('Err:', err);
